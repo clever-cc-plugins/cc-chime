@@ -1,0 +1,53 @@
+# cc-ding-dong
+
+Claude Code plugin that plays audio notifications when tasks complete or user input is required. Part of the [cc-plugins](https://github.com/MichaelvanLaar/cc-plugins) ecosystem.
+
+## Key Config Files
+
+| File | Purpose |
+|------|---------|
+| `.claudeignore` | Paths excluded from Claude Code indexing             |
+| `CLAUDE.md` | Project instructions, loaded every message           |
+| `.claude/settings.json` | Permissions, hooks, environment variables            |
+| `.githooks/pre-commit` | Secret scanning (gitleaks) + CLAUDE.md table sync    |
+| `.github/workflows/claude-code-review.yml` | Automatic PR review via Claude Code                  |
+| `.github/workflows/claude.yml` | Trigger Claude via @claude mentions in issues/PRs    |
+| `.gitignore` | Git ignore patterns                                  |
+| `plugins/cc-ding-dong/.claude-plugin/plugin.json` | Plugin manifest                                      |
+| `plugins/cc-ding-dong/skills/cc-ding-dong/SKILL.md` | Skill definition                                     |
+| `scripts/sync-config-table.sh` | Keeps Key Config Files table in sync on each commit  |
+
+## Structure
+
+```
+plugins/cc-ding-dong/
+├── .claude-plugin/
+│   └── plugin.json       # Plugin manifest (consumed by cc-plugins catalog)
+└── skills/
+    └── cc-ding-dong/
+        └── SKILL.md      # Skill definition
+```
+
+## References
+
+@docs/cc-plugin-repo-guideline.md **Read when:** checking plugin repo conventions (linked from cc-plugins marketplace)
+
+## Conventions
+
+- Follow the [cc-plugin-repo-guideline](https://github.com/MichaelvanLaar/cc-plugins/blob/main/docs/cc-plugin-repo-guideline.md) for all structural decisions
+- Skill names match their directory name (kebab-case)
+
+## Don't
+
+- Don't commit secrets or credentials to git
+- Don't use `--force` flags — fix the underlying issue instead
+- Don't copy skill files into the cc-plugins umbrella repo — it references them via `git-subdir`
+
+## Learnings
+
+When the user corrects a mistake or points out a recurring issue, append a one-line
+summary to `.claude/learnings.md`. Don't modify `CLAUDE.md` directly.
+
+## Compact Instructions
+
+When compacting, preserve: list of modified files, current test status, open TODOs, and key decisions made.

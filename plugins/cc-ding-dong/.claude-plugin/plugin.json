@@ -1,0 +1,10 @@
+{
+  "name": "cc-ding-dong",
+  "description": "Plays audio notifications when tasks complete or user input is required",
+  "author": {
+    "name": "Michael van Laar"
+  },
+  "homepage": "https://github.com/MichaelvanLaar/cc-ding-dong",
+  "repository": "https://github.com/MichaelvanLaar/cc-ding-dong",
+  "license": "MIT"
+}
