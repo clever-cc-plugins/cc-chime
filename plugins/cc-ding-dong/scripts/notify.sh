@@ -46,31 +46,28 @@ PYEOF
   ) || SOUND_TYPE="task-complete"
 fi
 
+# Resolve bundled audio directory relative to this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+AUDIO_DIR="$(dirname "$SCRIPT_DIR")/audio"
+
+if [ "$SOUND_TYPE" = "input-required" ]; then
+  SOUND_FILE="$AUDIO_DIR/input-required.wav"
+else
+  SOUND_FILE="$AUDIO_DIR/task-completed.wav"
+fi
+
 # Play sound — audio command runs in background so hook exits immediately
 case "$OSTYPE" in
   darwin*)
-    if [ "$SOUND_TYPE" = "input-required" ]; then
-      afplay /System/Library/Sounds/Tink.aiff 2>/dev/null &
-    else
-      afplay /System/Library/Sounds/Glass.aiff 2>/dev/null &
-    fi
+    afplay "$SOUND_FILE" 2>/dev/null &
     ;;
   linux*)
-    if [ "$SOUND_TYPE" = "input-required" ]; then
-      SOUND_FILE="/usr/share/sounds/freedesktop/stereo/dialog-information.oga"
-      ( paplay "$SOUND_FILE" 2>/dev/null ||
-        aplay  "$SOUND_FILE" 2>/dev/null ||
-        printf '\a\a' ) &
-    else
-      SOUND_FILE="/usr/share/sounds/freedesktop/stereo/complete.oga"
-      ( paplay "$SOUND_FILE" 2>/dev/null ||
-        aplay  "$SOUND_FILE" 2>/dev/null ||
-        printf '\a' ) &
-    fi
+    ( paplay "$SOUND_FILE" 2>/dev/null ||
+      aplay  "$SOUND_FILE" 2>/dev/null ||
+      printf '\a' ) &
     ;;
   msys*|cygwin*|mingw*)
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    powershell.exe -NonInteractive -File "$SCRIPT_DIR/notify.ps1" "$SOUND_TYPE" 2>/dev/null &
+    powershell.exe -NonInteractive -File "$SCRIPT_DIR/notify.ps1" "$SOUND_TYPE" "$SOUND_FILE" 2>/dev/null &
     ;;
 esac
 
