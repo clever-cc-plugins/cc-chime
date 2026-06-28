@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-# Determine sound type by parsing transcript_path from the Stop hook payload
+# Capture the Stop hook payload from stdin before any subshell runs
+PAYLOAD=$(cat)
 SOUND_TYPE="task-complete"
 
 if command -v python3 >/dev/null 2>&1; then
-  SOUND_TYPE=$(python3 - <<'PYEOF' 2>/dev/null
+  # Pass payload via env var so the heredoc can still supply the Python source
+  SOUND_TYPE=$(_NOTIFY_PAYLOAD="$PAYLOAD" python3 - <<'PYEOF' 2>/dev/null
 import sys, json, os
 
 try:
-    data = json.load(sys.stdin)
+    data = json.loads(os.environ.get('_NOTIFY_PAYLOAD', '{}'))
     transcript_path = data.get('transcript_path', '')
     last_text = ''
 
@@ -18,15 +20,22 @@ try:
         for line in reversed(lines):
             try:
                 msg = json.loads(line)
-                if msg.get('role') == 'assistant':
-                    content = msg.get('content', '')
-                    if isinstance(content, str):
-                        last_text = content
-                    elif isinstance(content, list):
-                        for block in content:
-                            if isinstance(block, dict) and block.get('type') == 'text':
-                                last_text += block.get('text', '')
-                    break
+                # Real format: {type:'assistant', message:{role:'assistant', content:[...]}}
+                # Flat format: {role:'assistant', content:'...'} (used in test transcripts)
+                if msg.get('type') == 'assistant':
+                    inner = msg.get('message', {})
+                elif msg.get('role') == 'assistant':
+                    inner = msg
+                else:
+                    continue
+                content = inner.get('content', '')
+                if isinstance(content, str):
+                    last_text = content
+                elif isinstance(content, list):
+                    for block in content:
+                        if isinstance(block, dict) and block.get('type') == 'text':
+                            last_text += block.get('text', '')
+                break
             except (json.JSONDecodeError, KeyError, TypeError):
                 continue
 
