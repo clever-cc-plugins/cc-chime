@@ -67,15 +67,24 @@ The plugin registers a `Stop` hook that fires at the end of every Claude turn. W
 
 JSON parsing uses Python 3, which is more universally available than `jq`. If Python 3 is not found, the script defaults to the task-complete sound. All errors default to task-complete — a notification failure never blocks or aborts Claude Code.
 
-### Sounds by platform
+### Bundled audio files
 
-| OS          | Task complete                                   | Input required                                          |
-| ----------- | ----------------------------------------------- | ------------------------------------------------------- |
-| **macOS**   | `Glass.aiff` (via `afplay`)                     | `Tink.aiff` (via `afplay`)                              |
-| **Linux**   | `complete.oga` (paplay → aplay → terminal bell) | `dialog-information.oga` (paplay → aplay → double bell) |
-| **Windows** | `Beep(880 Hz, 400 ms)`                          | `Beep(660 Hz, 300 ms)` × 2                              |
+The plugin ships two WAV files (mono, 44100 Hz, 16-bit, loudness-normalized to −18 LUFS):
 
-Linux sounds come from `/usr/share/sounds/freedesktop/stereo/`. The cascade of fallbacks handles variation in Linux audio systems across distros. On Windows, the script runs via Git Bash and delegates to `notify.ps1` through `powershell.exe`.
+| Event          | File                       | Source                                                                                        |
+| -------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
+| Task complete  | `audio/task-completed.wav` | Doorbell — "task-complete.wav" by kwahmah_02 ([CC BY 3.0](https://freesound.org/s/319041/))   |
+| Input required | `audio/input-required.wav` | Notification chime — "input-required.wav" by 3bagbrew ([CC0](https://freesound.org/s/57743/)) |
+
+### Playback by platform
+
+| OS          | Playback command                          | Fallback      |
+| ----------- | ----------------------------------------- | ------------- |
+| **macOS**   | `afplay` (built-in)                       | —             |
+| **Linux**   | `paplay` → `aplay`                        | terminal bell |
+| **Windows** | `System.Media.SoundPlayer` via PowerShell | console beep  |
+
+On Windows, the script runs via Git Bash and delegates to `notify.ps1` through `powershell.exe`.
 
 ---
 
@@ -97,11 +106,11 @@ To verify the plugin is working after installation, run these commands manually:
 # Create a test transcript
 echo '{"role":"assistant","content":"Here is the completed task."}' > /tmp/cc-ding-dong-test.jsonl
 
-# Task-complete path — should play the Glass / complete sound
+# Task-complete path — should play the doorbell sound
 echo '{"transcript_path":"/tmp/cc-ding-dong-test.jsonl"}' \
   | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
 
-# Input-required path — should play the Tink / dialog sound
+# Input-required path — should play the notification chime
 echo '{"role":"assistant","content":"What would you like to do?"}' > /tmp/cc-ding-dong-test.jsonl
 echo '{"transcript_path":"/tmp/cc-ding-dong-test.jsonl"}' \
   | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
@@ -113,8 +122,9 @@ echo '{}' | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
 **On Windows (PowerShell):**
 
 ```powershell
-pwsh ~/.claude/plugins/cc-ding-dong/scripts/notify.ps1 "task-complete"
-pwsh ~/.claude/plugins/cc-ding-dong/scripts/notify.ps1 "input-required"
+$root = "$env:USERPROFILE\.claude\plugins\cc-ding-dong"
+pwsh "$root\scripts\notify.ps1" "task-complete"   "$root\audio\task-completed.wav"
+pwsh "$root\scripts\notify.ps1" "input-required"  "$root\audio\input-required.wav"
 ```
 
 **End-to-end:**
@@ -128,6 +138,14 @@ pwsh ~/.claude/plugins/cc-ding-dong/scripts/notify.ps1 "input-required"
 ## Contributing
 
 Issues and pull requests are welcome. If you'd like to improve cross-platform support, add sound options, or fix a distro-specific audio issue, please open an issue first so we can align on the approach.
+
+---
+
+## Audio attribution
+
+See [ATTRIBUTION.md](ATTRIBUTION.md) for the licenses and sources of the bundled audio files.
+
+The task-complete sound ("task-complete.wav" by kwahmah_02) is used under [Creative Commons Attribution 3.0](https://creativecommons.org/licenses/by/3.0/).
 
 ---
 
