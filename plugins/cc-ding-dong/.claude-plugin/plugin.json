@@ -6,5 +6,17 @@
   },
   "homepage": "https://github.com/MichaelvanLaar/cc-ding-dong",
   "repository": "https://github.com/MichaelvanLaar/cc-ding-dong",
-  "license": "MIT"
+  "license": "MIT",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/notify.sh\""
+          }
+        ]
+      }
+    ]
+  }
 }
