@@ -1,20 +1,20 @@
 # cc-ding-dong
 
-Claude Code plugin that plays audio notifications when tasks complete or user input is required. Part of the [cc-plugins](https://github.com/MichaelvanLaar/cc-plugins) ecosystem.
+Claude Code plugin that plays an audio notification at the end of every Claude turn. Part of the [cc-plugins](https://github.com/MichaelvanLaar/cc-plugins) ecosystem.
 
 ## Key Config Files
 
 | File | Purpose |
 |------|---------|
-| `.claudeignore` | Paths excluded from Claude Code indexing                  |
-| `CLAUDE.md` | Project instructions, loaded every message                |
-| `.claude/settings.json` | Permissions, hooks, environment variables                 |
-| `.githooks/pre-commit` | Secret scanning (gitleaks) + CLAUDE.md table sync         |
-| `.github/workflows/claude-code-review.yml` | Automatic PR review via Claude Code                       |
-| `.github/workflows/claude.yml` | Trigger Claude via @claude mentions in issues/PRs         |
-| `.gitignore` | Git ignore patterns                                       |
-| `plugins/cc-ding-dong/.claude-plugin/plugin.json` | Plugin manifest                                           |
-| `scripts/sync-config-table.sh` | Keeps Key Config Files table in sync on each commit       |
+| `.claudeignore` | Paths excluded from Claude Code indexing             |
+| `CLAUDE.md` | Project instructions, loaded every message           |
+| `.claude/settings.json` | Permissions, hooks, environment variables            |
+| `.githooks/pre-commit` | Secret scanning (gitleaks) + CLAUDE.md table sync    |
+| `.github/workflows/claude-code-review.yml` | Automatic PR review via Claude Code                  |
+| `.github/workflows/claude.yml` | Trigger Claude via @claude mentions in issues/PRs    |
+| `.gitignore` | Git ignore patterns                                  |
+| `plugins/cc-ding-dong/.claude-plugin/plugin.json` | Plugin manifest                                      |
+| `scripts/sync-config-table.sh` | Keeps Key Config Files table in sync on each commit  |
 
 ## Structure
 

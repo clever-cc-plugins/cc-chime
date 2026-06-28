@@ -1,6 +1,6 @@
 # cc-ding-dong
 
-A [Claude Code](https://claude.ai/code) plugin that plays audio notifications at the end of every Claude turn — a distinct sound for "task complete" and another for "input required."
+A [Claude Code](https://claude.ai/code) plugin that plays an audio notification at the end of every Claude turn, so you can step away while Claude works and come back when it's done.
 
 No skills to invoke. Install means active, uninstall means silent.
 
@@ -8,14 +8,9 @@ No skills to invoke. Install means active, uninstall means silent.
 
 ## What it does
 
-Every time Claude finishes a turn, `cc-ding-dong` plays a short sound:
+Every time Claude finishes a turn, `cc-ding-dong` plays a short doorbell sound.
 
-| Situation                           | Sound                   |
-| ----------------------------------- | ----------------------- |
-| Claude finished work and is waiting | **Task complete** tone  |
-| Claude is asking you a question     | **Input required** tone |
-
-This lets you step away while Claude works and come back only when needed — without keeping an eye on the terminal.
+This lets you work on something else while Claude runs and return only when you hear the signal — without keeping an eye on the terminal.
 
 ---
 
@@ -56,25 +51,17 @@ Claude Code removes the hook automatically. To remove the marketplace as well:
 
 ## How it works
 
-The plugin registers a `Stop` hook that fires at the end of every Claude turn. When triggered:
+The plugin registers a `Stop` hook that fires at the end of every Claude turn. When triggered, it plays `audio/task-completed.wav` for the current OS and exits immediately.
 
-1. Reads `transcript_path` from the hook payload (a `.jsonl` file of the session transcript)
-2. Finds the last assistant message in that transcript
-3. Checks whether it contains a `?` character:
-   - Contains `?` → **input required** sound
-   - No `?` → **task complete** sound
-4. Plays the appropriate sound for the current OS and exits immediately
+All errors are suppressed — a notification failure never blocks or aborts Claude Code.
 
-JSON parsing uses Python 3, which is more universally available than `jq`. If Python 3 is not found, the script defaults to the task-complete sound. All errors default to task-complete — a notification failure never blocks or aborts Claude Code.
+### Bundled audio file
 
-### Bundled audio files
+The plugin ships one WAV file (mono, 44100 Hz, 16-bit, loudness-normalized to −18 LUFS):
 
-The plugin ships two WAV files (mono, 44100 Hz, 16-bit, loudness-normalized to −18 LUFS):
-
-| Event          | File                       | Source                                                                                        |
-| -------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
-| Task complete  | `audio/task-completed.wav` | Doorbell — "task-complete.wav" by kwahmah_02 ([CC BY 3.0](https://freesound.org/s/319041/))   |
-| Input required | `audio/input-required.wav` | Notification chime — "input-required.wav" by 3bagbrew ([CC0](https://freesound.org/s/57743/)) |
+| Event         | File                       | Source                                                                                      |
+| ------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
+| Turn complete | `audio/task-completed.wav` | Doorbell — "task-complete.wav" by kwahmah_02 ([CC BY 3.0](https://freesound.org/s/319041/)) |
 
 ### Playback by platform
 
@@ -91,7 +78,6 @@ On Windows, the script runs via Git Bash and delegates to `notify.ps1` through `
 ## Requirements
 
 - **Claude Code** (CLI or IDE extension)
-- **Python 3** — for transcript parsing (optional; falls back gracefully if missing)
 - **macOS** — `afplay` (built-in on all macOS versions)
 - **Linux** — PulseAudio (`paplay`) or ALSA (`aplay`) recommended; falls back to terminal bell
 - **Windows** — Git Bash + PowerShell (both typically available in a standard Windows dev setup)
@@ -100,38 +86,23 @@ On Windows, the script runs via Git Bash and delegates to `notify.ps1` through `
 
 ## Testing
 
-To verify the plugin is working after installation, run these commands manually:
+To verify the plugin is working after installation, run this command manually:
 
 ```bash
-# Create a test transcript
-echo '{"role":"assistant","content":"Here is the completed task."}' > /tmp/cc-ding-dong-test.jsonl
-
-# Task-complete path — should play the doorbell sound
-echo '{"transcript_path":"/tmp/cc-ding-dong-test.jsonl"}' \
-  | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
-
-# Input-required path — should play the notification chime
-echo '{"role":"assistant","content":"What would you like to do?"}' > /tmp/cc-ding-dong-test.jsonl
-echo '{"transcript_path":"/tmp/cc-ding-dong-test.jsonl"}' \
-  | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
-
-# Fallback path (no transcript file) — should play the task-complete sound
-echo '{}' | bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh
+bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh < /dev/null
 ```
 
 **On Windows (PowerShell):**
 
 ```powershell
 $root = "$env:USERPROFILE\.claude\plugins\cc-ding-dong"
-pwsh "$root\scripts\notify.ps1" "task-complete"   "$root\audio\task-completed.wav"
-pwsh "$root\scripts\notify.ps1" "input-required"  "$root\audio\input-required.wav"
+pwsh "$root\scripts\notify.ps1" "$root\audio\task-completed.wav"
 ```
 
 **End-to-end:**
 
 1. Install the plugin
-2. Run a Claude Code task to completion → confirm task-complete sound
-3. Ask Claude something that prompts a clarifying question back → confirm input-required sound
+2. Run a Claude Code task to completion → confirm you hear the doorbell sound
 
 ---
 
@@ -143,7 +114,7 @@ Issues and pull requests are welcome. If you'd like to improve cross-platform su
 
 ## Audio attribution
 
-See [ATTRIBUTION.md](ATTRIBUTION.md) for the licenses and sources of the bundled audio files.
+See [ATTRIBUTION.md](ATTRIBUTION.md) for the license and source of the bundled audio file.
 
 The task-complete sound ("task-complete.wav" by kwahmah_02) is used under [Creative Commons Attribution 3.0](https://creativecommons.org/licenses/by/3.0/).
 

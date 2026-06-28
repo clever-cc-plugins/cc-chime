@@ -1,6 +1,6 @@
 {
   "name": "cc-ding-dong",
-  "description": "Plays audio notifications when tasks complete or user input is required",
+  "description": "Plays an audio notification at the end of every Claude turn",
   "author": {
     "name": "Michael van Laar"
   },
