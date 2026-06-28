@@ -25,7 +25,7 @@ Open Claude Code in any project and run:
 
 ```
 /plugin marketplace add MichaelvanLaar/cc-plugins
-/plugin install cc-ding-dong@cc-ding-dong
+/plugin install cc-ding-dong@cc-plugins
 ```
 
 Claude Code wires the hook into `~/.claude/settings.json` automatically. No further setup is required.
@@ -43,7 +43,7 @@ Once enabled, Claude Code updates the plugin on startup whenever a new version i
 ### Uninstalling
 
 ```
-/plugin uninstall cc-ding-dong@cc-ding-dong
+/plugin uninstall cc-ding-dong@cc-plugins
 ```
 
 Claude Code removes the hook automatically. To remove the marketplace as well:
