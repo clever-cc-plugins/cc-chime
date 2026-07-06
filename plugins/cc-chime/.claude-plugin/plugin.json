@@ -1,11 +1,11 @@
 {
-  "name": "cc-ding-dong",
+  "name": "cc-chime",
   "description": "Plays an audio notification at the end of every Claude turn",
   "author": {
     "name": "Michael van Laar"
   },
-  "homepage": "https://github.com/MichaelvanLaar/cc-ding-dong",
-  "repository": "https://github.com/MichaelvanLaar/cc-ding-dong",
+  "homepage": "https://github.com/MichaelvanLaar/cc-chime",
+  "repository": "https://github.com/MichaelvanLaar/cc-chime",
   "license": "MIT",
   "hooks": {
     "Stop": [

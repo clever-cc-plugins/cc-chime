@@ -1,4 +1,4 @@
-# cc-ding-dong
+# cc-chime
 
 A [Claude Code](https://claude.ai/code) plugin that plays an audio notification at the end of every Claude turn, so you can step away while Claude works and come back when it's done.
 
@@ -8,7 +8,7 @@ No skills to invoke. Install means active, uninstall means silent.
 
 ## What it does
 
-Every time Claude finishes a turn, `cc-ding-dong` plays a short doorbell sound.
+Every time Claude finishes a turn, `cc-chime` plays a short doorbell sound.
 
 This lets you work on something else while Claude runs and return only when you hear the signal — without keeping an eye on the terminal.
 
@@ -20,7 +20,7 @@ Open Claude Code in any project and run:
 
 ```
 /plugin marketplace add MichaelvanLaar/cc-plugins
-/plugin install cc-ding-dong@cc-plugins
+/plugin install cc-chime@cc-plugins
 ```
 
 Claude Code wires the hook into `~/.claude/settings.json` automatically. No further setup is required.
@@ -38,7 +38,7 @@ Once enabled, Claude Code updates the plugin on startup whenever a new version i
 ### Uninstalling
 
 ```
-/plugin uninstall cc-ding-dong@cc-plugins
+/plugin uninstall cc-chime@cc-plugins
 ```
 
 Claude Code removes the hook automatically. To remove the marketplace as well:
@@ -89,13 +89,13 @@ On Windows, the script runs via Git Bash and delegates to `notify.ps1` through `
 To verify the plugin is working after installation, run this command manually:
 
 ```bash
-bash ~/.claude/plugins/cc-ding-dong/scripts/notify.sh < /dev/null
+bash ~/.claude/plugins/cc-chime/scripts/notify.sh < /dev/null
 ```
 
 **On Windows (PowerShell):**
 
 ```powershell
-$root = "$env:USERPROFILE\.claude\plugins\cc-ding-dong"
+$root = "$env:USERPROFILE\.claude\plugins\cc-chime"
 pwsh "$root\scripts\notify.ps1" "$root\audio\task-completed.wav"
 ```
 
