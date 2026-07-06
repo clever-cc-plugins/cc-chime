@@ -1,6 +1,6 @@
 {
   "name": "cc-chime",
-  "description": "Plays an audio notification at the end of every Claude turn",
+  "description": "Plays an audio notification at the end of every Claude turn and when Claude needs your input",
   "author": {
     "name": "Michael van Laar"
   },
@@ -9,6 +9,16 @@
   "license": "MIT",
   "hooks": {
     "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/notify.sh\""
+          }
+        ]
+      }
+    ],
+    "Notification": [
       {
         "hooks": [
           {

@@ -51,7 +51,7 @@ Claude Code removes the hook automatically. To remove the marketplace as well:
 
 ## How it works
 
-The plugin registers a `Stop` hook that fires at the end of every Claude turn. When triggered, it plays `audio/task-completed.wav` for the current OS and exits immediately.
+The plugin registers a `Stop` hook that fires at the end of every Claude turn, and a `Notification` hook that fires when Claude needs your input (e.g. permission prompts and questions asked via skills). Both trigger the same sound: `audio/task-completed.wav`, played for the current OS, exiting immediately.
 
 All errors are suppressed — a notification failure never blocks or aborts Claude Code.
 
