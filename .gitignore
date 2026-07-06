@@ -3,3 +3,8 @@
 
 # Headroom — machine-local session cache and learnings
 .headroom/
+
+# Code intelligence indexes — machine-local
+.codegraph/
+.serena/
+.tokensave/
