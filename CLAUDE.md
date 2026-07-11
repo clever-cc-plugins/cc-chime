@@ -6,15 +6,17 @@ Claude Code plugin that plays an audio notification at the end of every Claude t
 
 | File | Purpose |
 |------|---------|
-| `.claudeignore` | Paths excluded from Claude Code indexing               |
-| `CLAUDE.md` | Project instructions, loaded every message             |
-| `.claude/settings.json` | Permissions, hooks, environment variables              |
-| `.githooks/pre-commit` | Secret scanning (gitleaks) + CLAUDE.md table sync      |
-| `.github/workflows/claude-code-review.yml` | Automatic PR review via Claude Code                    |
-| `.github/workflows/claude.yml` | Trigger Claude via @claude mentions in issues/PRs      |
-| `.gitignore` | Git ignore patterns                                    |
-| `plugins/cc-chime/.claude-plugin/plugin.json` | Plugin manifest                                        |
-| `scripts/sync-config-table.sh` | Keeps Key Config Files table in sync on each commit    |
+| `.claude/format-markdown.sh` | PostToolUse hook: formats Markdown files with prettier after edits  |
+| `.claude/guard-secret-files.sh` | PreToolUse hook: blocks reads/edits/writes of secret .env files     |
+| `.claudeignore` | Paths excluded from Claude Code indexing                            |
+| `CLAUDE.md` | Project instructions, loaded every message                          |
+| `.claude/settings.json` | Permissions, hooks, environment variables                           |
+| `.githooks/pre-commit` | Secret scanning (gitleaks) + CLAUDE.md table sync                   |
+| `.github/workflows/claude-code-review.yml` | Automatic PR review via Claude Code                                 |
+| `.github/workflows/claude.yml` | Trigger Claude via @claude mentions in issues/PRs                   |
+| `.gitignore` | Git ignore patterns                                                 |
+| `plugins/cc-chime/.claude-plugin/plugin.json` | Plugin manifest                                                     |
+| `scripts/sync-config-table.sh` | Keeps Key Config Files table in sync on each commit                 |
 
 ## Structure
 
