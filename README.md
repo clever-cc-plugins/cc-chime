@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/clever-cc-plugins/.github/main/assets/logo-dark.svg" />
+    <img src="https://raw.githubusercontent.com/clever-cc-plugins/.github/main/assets/logo.svg" width="220" alt="clever [cc] plugins" />
+  </picture>
+</p>
+
 # cc-chime
 
 A [Claude Code](https://claude.ai/code) plugin that plays an audio notification at the end of every Claude turn, so you can step away while Claude works and come back when it's done.
@@ -123,3 +130,9 @@ The task-complete sound ("task-complete.wav" by kwahmah_02) is used under [Creat
 ## License
 
 [MIT](LICENSE) — Copyright (c) 2026 Michael van Laar
+
+---
+
+<p align="center">
+  Part of the <a href="https://github.com/clever-cc-plugins">clever-cc-plugins</a> family · <a href="https://github.com/clever-cc-plugins/marketplace">marketplace</a> · <a href="https://github.com/clever-cc-plugins/cc-config">cc-config</a> · <a href="https://github.com/clever-cc-plugins/cc-content">cc-content</a>
+</p>
