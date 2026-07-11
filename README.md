@@ -19,8 +19,8 @@ This lets you work on something else while Claude runs and return only when you 
 Open Claude Code in any project and run:
 
 ```
-/plugin marketplace add MichaelvanLaar/cc-plugins
-/plugin install cc-chime@cc-plugins
+/plugin marketplace add clever-cc-plugins/marketplace
+/plugin install cc-chime@clever-cc-plugins
 ```
 
 Claude Code wires the hook into `~/.claude/settings.json` automatically. No further setup is required.
@@ -31,20 +31,20 @@ Auto-update for third-party marketplaces is off by default. To enable it:
 
 1. Run `/plugin` in Claude Code
 2. Go to the **Marketplaces** tab
-3. Toggle auto-update for `MichaelvanLaar/cc-plugins`
+3. Toggle auto-update for `clever-cc-plugins/marketplace`
 
 Once enabled, Claude Code updates the plugin on startup whenever a new version is available.
 
 ### Uninstalling
 
 ```
-/plugin uninstall cc-chime@cc-plugins
+/plugin uninstall cc-chime@clever-cc-plugins
 ```
 
 Claude Code removes the hook automatically. To remove the marketplace as well:
 
 ```
-/plugin marketplace remove cc-plugins
+/plugin marketplace remove clever-cc-plugins
 ```
 
 ---
