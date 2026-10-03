@@ -5,6 +5,8 @@
   </picture>
 </p>
 
+<img src="assets/icon.svg" align="right" width="96" height="96" alt="cc-chime icon" />
+
 # cc-chime
 
 A [Claude Code](https://claude.ai/code) plugin that plays an audio notification at the end of every Claude turn, so you can step away while Claude works and come back when it's done.
