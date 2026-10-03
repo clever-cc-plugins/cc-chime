@@ -24,6 +24,7 @@ Claude Code plugin that plays an audio notification at the end of every Claude t
 ```
 plugins/cc-chime/
 ├── .claude-plugin/
+│   ├── icon.png          # Plugin icon (source SVG: clever-cc-plugins/.github assets/plugin-icons/)
 │   └── plugin.json       # Plugin manifest (consumed by clever-cc-plugins catalog)
 └── scripts/
     ├── notify.sh         # macOS + Linux audio script
