@@ -8,16 +8,17 @@ Claude Code plugin that plays an audio notification at the end of every Claude t
 | --------------------------------------------- | ------------------------------------------------------------------ |
 | `.claude/format-markdown.sh`                  | PostToolUse hook: formats Markdown files with prettier after edits |
 | `.claude/guard-secret-files.sh`               | PreToolUse hook: blocks reads/edits/writes of secret .env files    |
-| `.claudeignore`                               | Paths excluded from Claude Code indexing                           |
-| `CLAUDE.md`                                   | Project instructions, loaded every message                         |
 | `.claude/settings.json`                       | Permissions, hooks, environment variables                          |
 | `.githooks/pre-commit`                        | Secret scanning (gitleaks) + CLAUDE.md table sync                  |
 | `.github/workflows/claude-code-review.yml`    | Automatic PR review via Claude Code                                |
 | `.github/workflows/claude.yml`                | Trigger Claude via @claude mentions in issues/PRs                  |
-| `.github/workflows/release.yml`               | TODO: add description                                              |
+| `.github/workflows/release.yml`               | Release via the shared `plugin-release` workflow on push to main   |
 | `.gitignore`                                  | Git ignore patterns                                                |
+| `CLAUDE.md`                                   | Project instructions, loaded every message                         |
 | `plugins/cc-chime/.claude-plugin/plugin.json` | Plugin manifest                                                    |
 | `scripts/sync-config-table.sh`                | Keeps Key Config Files table in sync on each commit                |
+
+<!-- cc-config: last-optimize-run: 2026-11-05 ad145dac619ebe0adcb403cf3fbc6d08a3dae3b5 -->
 
 ## Structure
 
@@ -26,14 +27,12 @@ plugins/cc-chime/
 ├── .claude-plugin/
 │   ├── icon.png          # Plugin icon (source SVG: clever-cc-plugins/.github/assets/plugin-icons/)
 │   └── plugin.json       # Plugin manifest (consumed by clever-cc-plugins catalog)
+├── audio/
+│   └── task-completed.wav  # Chime played by the notify scripts
 └── scripts/
     ├── notify.sh         # macOS + Linux audio script
     └── notify.ps1        # Windows PowerShell audio script
 ```
-
-## References
-
-@docs/cc-plugin-repo-guideline.md **Read when:** checking plugin repo conventions (linked from clever-cc-plugins marketplace)
 
 ## Conventions
 
