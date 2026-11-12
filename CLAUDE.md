@@ -18,7 +18,7 @@ Claude Code plugin that plays an audio notification at the end of every Claude t
 | `plugins/cc-chime/.claude-plugin/plugin.json` | Plugin manifest                                                    |
 | `scripts/sync-config-table.sh`                | Keeps Key Config Files table in sync on each commit                |
 
-<!-- cc-config: last-optimize-run: 2026-11-05 ad145dac619ebe0adcb403cf3fbc6d08a3dae3b5 -->
+<!-- cc-config: last-optimize-run: 2026-11-12 76d8798dbe7235eaf024bdd6e2983d439b478b0b -->
 
 ## Structure
 
@@ -37,7 +37,6 @@ plugins/cc-chime/
 ## Conventions
 
 - Follow the [cc-plugin-repo-guideline](https://github.com/clever-cc-plugins/marketplace/blob/main/docs/cc-plugin-repo-guideline.md) for all structural decisions
-- Skill names match their directory name (kebab-case)
 
 ## Don't
 
